@@ -13,13 +13,6 @@ public final class DkstCLI {
       self.document = document
 
       self.cli = Group {
-        $0.command("open",
-          Argument<String>("path", description: "Path to a Deckset presentation."),
-          description: "Open a Deckset presentation."
-        ) { (path: String) in
-          app.open?(path)
-        }
-
         $0.command("export",
           Argument<String>("path", description: "Path to a Deckset presentation."),
           Option("format", default: "PDF", description: "The format to export in, valid options are [PDF, JPEG, PNG]. Defaults to PDF."),
@@ -43,6 +36,18 @@ public final class DkstCLI {
 
         $0.command("rehearse", description: "Rehearse a Deckset presentation.") {
           document?.rehearse?()
+        }
+
+        $0.command("open",
+          Argument<String>("path", description: "Path to a Deckset presentation."),
+          description: "Open a Deckset presentation."
+        ) { (path: String) in
+          app.open?(path)
+        }
+
+        $0.command("preview", description: "Toggle the Deckset preview window.") {
+          let isPreview = app.preview
+          app.setPreview?(!isPreview!)
         }
 
         $0.command("quit", description: "Quit Deckset.") {
