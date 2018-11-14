@@ -1,5 +1,4 @@
 import Foundation
-import Rainbow
 import Commander
 
 public final class DkstCLI {
