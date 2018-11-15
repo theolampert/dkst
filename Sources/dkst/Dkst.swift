@@ -14,16 +14,16 @@ public final class DkstCLI {
 
       self.cli = Group {
         $0.command("export",
-          Argument<String>("path", description: "Path to a Deckset presentation."),
+          Argument<String>("path", description: "Export path."),
           Option("format", default: "PDF", description: "The format to export in, valid options are [PDF, JPEG, PNG]. Defaults to PDF."),
           Flag("printAllSteps", default: false, description: "Print all steps."),
           Flag("includePresenterNotes", default: false, description: "Include presenter notes."),
           description: "Export the current Deckset presentation."
         ) { (path: String, format: String, printAllSteps: Bool, includePresenterNotes: Bool) in
 
-          let url = URL(string: path)
+          let filePath = NSURL(fileURLWithPath: path).absoluteURL
           document?.exportTo?(
-            url,
+            filePath,
             as: format,
             printAllSteps: printAllSteps,
             includePresenterNotes: includePresenterNotes
