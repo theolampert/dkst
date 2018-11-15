@@ -8,6 +8,7 @@ Control Deckset through a simple CLI.
 
 ```
 curl -L https://github.com/theolampert/dkst/releases/download/v1.0.0/dkst > dkst
+chmod +x dkst
 ./dkst
 ```
 Copy the file to somewhere in your PATH.
