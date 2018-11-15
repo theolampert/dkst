@@ -12,10 +12,10 @@ final class DkstTests: XCTestCase {
             return
         }
 
-        let fooBinary = productsDirectory.appendingPathComponent("dkst")
+        let dkstBinary = productsDirectory.appendingPathComponent("dkst")
 
         let process = Process()
-        process.executableURL = fooBinary
+        process.executableURL = dkstBinary
 
         let pipe = Pipe()
         process.standardOutput = pipe
@@ -23,10 +23,9 @@ final class DkstTests: XCTestCase {
         try process.run()
         process.waitUntilExit()
 
-        let data = pipe.fileHandleForReading.readDataToEndOfFile()
-        let output = String(data: data, encoding: .utf8)
+        let exitCode = process.terminationStatus
 
-        XCTAssertEqual(output, "Hello, world!\n")
+        XCTAssertEqual(exitCode, 1)
     }
 
     /// Returns path to the built products directory.
@@ -42,6 +41,6 @@ final class DkstTests: XCTestCase {
     }
 
     static var allTests = [
-        ("testExample", testExample),
+        ("testExample", testExample)
     ]
 }

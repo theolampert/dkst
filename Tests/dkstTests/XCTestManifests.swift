@@ -3,7 +3,7 @@ import XCTest
 #if !os(macOS)
 public func allTests() -> [XCTestCaseEntry] {
     return [
-        testCase(dkstTests.allTests),
+        testCase(DkstTests.allTests)
     ]
 }
 #endif
