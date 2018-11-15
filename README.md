@@ -7,9 +7,9 @@ Control Deckset through a simple CLI.
 ```sh
 git clone git@github.com:theolampert/dkst.git
 cd dkst
-swift build
+swift build -c release
 ```
-Copy the built file to your PATH.
+Copy the built file to somewhere in your PATH.
 
 #### Using dkst:
 
