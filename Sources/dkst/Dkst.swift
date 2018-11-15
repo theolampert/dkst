@@ -42,7 +42,8 @@ public final class DkstCLI {
           Argument<String>("path", description: "Path to a Deckset presentation."),
           description: "Open a Deckset presentation."
         ) { (path: String) in
-          app.open?(path)
+          let filePath = NSURL(fileURLWithPath: path).path
+          app.open?(filePath)
         }
 
         $0.command("preview", description: "Toggle the Deckset preview window.") {
