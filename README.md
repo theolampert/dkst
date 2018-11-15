@@ -7,7 +7,7 @@ Control Deckset through a simple CLI.
 ##### Get latest binary:
 
 ```
-curl -L https://github.com/theolampert/dkst/releases/download/v1.0.0/dkst > dkst
+curl -L https://github.com/theolampert/dkst/releases/download/v1.0.1/dkst > dkst
 chmod +x dkst
 ./dkst
 ```
