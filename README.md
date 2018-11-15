@@ -4,12 +4,22 @@ Control Deckset through a simple CLI.
 
 #### Installing:
 
+##### Get latest binary:
+
+```
+curl -L https://github.com/theolampert/dkst/releases/download/v1.0.0/dkst > dkst
+./dkst
+```
+Copy the file to somewhere in your PATH.
+
+##### Build from source:
 ```sh
 git clone git@github.com:theolampert/dkst.git
 cd dkst
 swift build -c release
 ```
-Copy the built file to somewhere in your PATH.
+
+Copy the file to somewhere in your PATH.
 
 #### Using dkst:
 
