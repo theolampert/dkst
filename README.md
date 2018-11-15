@@ -20,7 +20,7 @@ cd dkst
 swift build -c release
 ```
 
-Copy the file to somewhere in your PATH.
+Copy `.build/release/dkst` to somewhere in your PATH.
 
 #### Using dkst:
 
