@@ -1,0 +1,9 @@
+os:
+- osx
+language: generic
+sudo: required
+dist: trusty
+osx_image: xcode10
+env: SWIFT_VERSION=4.2
+script:
+- swift test
