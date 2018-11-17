@@ -1,4 +1,4 @@
-# dkst
+# dkst [![Build Status](https://travis-ci.org/theolampert/dkst.svg?branch=master)](https://travis-ci.org/theolampert/dkst)
 
 Control Deckset through a simple CLI.
 
