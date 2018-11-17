@@ -1,6 +1,5 @@
 import Foundation
 import Commander
-import PathKit
 
 public final class DkstCLI {
     private let app: DecksetApplication
@@ -19,7 +18,7 @@ public final class DkstCLI {
           description: "Export the current Deckset presentation."
         ) { (outputPath: String, inputFile: String, format: String, printAllSteps: Bool, includePresenterNotes: Bool) in
 
-          var outPath = Path(outputPath)
+          var outPath = outputPath
           let filePath = NSURL(fileURLWithPath: inputFile).path
 
           var document = Utilities.getCurrentDocument(decksetApp: app)
@@ -37,14 +36,14 @@ public final class DkstCLI {
             document = Utilities.getCurrentDocument(decksetApp: app)
             window = Utilities.getCurrentWindow(decksetApp: app)
           }
-   
-          if outPath.isDirectory && format == "PDF" {
+
+          if Utilities.isDirectory(path: outPath) && format == "PDF" {
             if let fileName = document?.name ?? filePath {
               outPath = Utilities.createOutputPath(out: outputPath, file: fileName, format: format)
             }
           }
 
-          let outURL = NSURL(fileURLWithPath: "\(outPath)")
+          let outURL = NSURL(fileURLWithPath: outPath)
           let absoluteOutputPath = outURL.absoluteURL
           document?.exportTo?(
             absoluteOutputPath,

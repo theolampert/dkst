@@ -1,5 +1,6 @@
 import Foundation
 import ScriptingBridge
+import DkstLib
 
 if let application = SBApplication(bundleIdentifier: "com.unsignedinteger.Deckset-Paddle") {
   let decksetApplication = application as DecksetApplication

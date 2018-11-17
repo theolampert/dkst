@@ -1,4 +1,4 @@
-import PathKit
+import Foundation
 
 public class Utilities {
   public static func getCurrentDocument(decksetApp: DecksetApplication) -> DecksetDocument? {
@@ -11,11 +11,17 @@ public class Utilities {
     return decksetWindows?.first
   }
 
-  public static func foo() -> String {
-    return "bar"
+  public static func createOutputPath(out: String, file: String, format: String) -> String {
+    return out + file.replacingOccurrences(of: ".md", with: "." + format)
   }
 
-  public static func createOutputPath(out: String, file: String, format: String) -> Path {
-    return Path(out) + Path(file.replacingOccurrences(of: ".md", with: "." + format))
+  public static func isDirectory(path: String) -> Bool {
+    var isDirectory: ObjCBool = false
+    let fileManager = FileManager.default
+    if fileManager.fileExists(atPath: path, isDirectory: &isDirectory) {
+      return isDirectory.boolValue
+    } else {
+      return false
+    }
   }
 }
