@@ -3,12 +3,13 @@ import Commander
 
 public final class DkstCLI {
     private let app: DecksetApplication
-    private let cli: Commander.Group
 
     public init(app: DecksetApplication) {
       self.app = app
+    }
 
-      self.cli = Group {
+    private func configureCLI() -> Group {
+      return Group {
         $0.command("export",
           Argument<String>("outputPath", description: "Export path."),
           Option<String>("inputFile", default: "", description: "Input path. If not supplied uses the open presentation."),
@@ -21,8 +22,8 @@ public final class DkstCLI {
           var outPath = outputPath
           let filePath = NSURL(fileURLWithPath: inputFile).path
 
-          var document = Utilities.getCurrentDocument(decksetApp: app)
-          var window = Utilities.getCurrentWindow(decksetApp: app)
+          var document = Utilities.getCurrentDocument(decksetApp: self.app)
+          var window = Utilities.getCurrentWindow(decksetApp: self.app)
 
           // Assume no document is open and bail out.
           if document?.name == nil && filePath == nil {
@@ -32,9 +33,9 @@ public final class DkstCLI {
 
           // Filepath supplied, open the app and grab documents and windows again
           if (filePath != nil) {
-            app.open?(filePath)
-            document = Utilities.getCurrentDocument(decksetApp: app)
-            window = Utilities.getCurrentWindow(decksetApp: app)
+            self.app.open?(filePath)
+            document = Utilities.getCurrentDocument(decksetApp: self.app)
+            window = Utilities.getCurrentWindow(decksetApp: self.app)
           }
 
           if Utilities.isDirectory(path: outPath) && format == "PDF" {
@@ -43,8 +44,7 @@ public final class DkstCLI {
             }
           }
 
-          let outURL = NSURL(fileURLWithPath: outPath)
-          let absoluteOutputPath = outURL.absoluteURL
+          let absoluteOutputPath = NSURL(fileURLWithPath: outPath).absoluteURL
           document?.exportTo?(
             absoluteOutputPath,
             as: format,
@@ -57,12 +57,12 @@ public final class DkstCLI {
         }
 
         $0.command("present", description: "Present a Deckset presentation.") {
-          let document = Utilities.getCurrentDocument(decksetApp: app)
+          let document = Utilities.getCurrentDocument(decksetApp: self.app)
           document?.present?()
         }
 
         $0.command("rehearse", description: "Rehearse a Deckset presentation.") {
-          let document = Utilities.getCurrentDocument(decksetApp: app)
+          let document = Utilities.getCurrentDocument(decksetApp: self.app)
           document?.rehearse?()
         }
 
@@ -71,21 +71,22 @@ public final class DkstCLI {
           description: "Open a Deckset presentation."
         ) { (path: String) in
           let filePath = NSURL(fileURLWithPath: path).path
-          app.open?(filePath)
+          self.app.open?(filePath)
         }
 
         $0.command("preview", description: "Toggle the Deckset preview window.") {
-          let isPreview = app.preview
-          app.setPreview?(!isPreview!)
+          let isPreview = self.app.preview
+          self.app.setPreview?(!isPreview!)
         }
 
         $0.command("quit", description: "Quit Deckset.") {
-          app.quit?()
+          self.app.quit?()
         }
       }
     }
 
     public func run() throws {
-      self.cli.run()
+      let cli = self.configureCLI()
+      cli.run()
     }
 }
