@@ -11,12 +11,12 @@ public final class DkstCLI {
     private func configureCLI() -> Group {
       return Group {
         $0.command("export",
-          Argument<String>("outputPath", description: "Export path."),
-          Option<String>("inputFile", default: "", description: "Input path. If not supplied uses the open presentation."),
-          Option<String>("format", default: "PDF", description: "The format to export in, valid options are [PDF, JPEG, PNG]. Defaults to PDF."),
-          Flag("printAllSteps", default: false, description: "Print all steps."),
-          Flag("includePresenterNotes", default: false, description: "Include presenter notes."),
-          description: "Export the current Deckset presentation."
+          Argument<String>("outputPath", description: HelpText.outputPath),
+          Option<String>("inputFile", default: "", description: HelpText.inputFile),
+          Option<String>("format", default: "PDF", description: HelpText.format),
+          Flag("printAllSteps", default: false, description: HelpText.printAllSteps),
+          Flag("includePresenterNotes", default: false, description: HelpText.includePresenterNotes),
+          description: HelpText.exportDescription
         ) { (outputPath: String, inputFile: String, format: String, printAllSteps: Bool, includePresenterNotes: Bool) in
 
           var outPath = outputPath
@@ -25,23 +25,21 @@ public final class DkstCLI {
           var document = Utilities.getCurrentDocument(decksetApp: self.app)
           var window = Utilities.getCurrentWindow(decksetApp: self.app)
 
-          // Assume no document is open and bail out.
-          if document?.name == nil && filePath == nil {
-            print("No document open or inputFile supplied.")
-            return
-          }
-
           // Filepath supplied, open the app and grab documents and windows again
-          if (filePath != nil) {
+          if filePath != nil {
             self.app.open?(filePath)
             document = Utilities.getCurrentDocument(decksetApp: self.app)
             window = Utilities.getCurrentWindow(decksetApp: self.app)
           }
 
+          // Assume no document is open and bail out.
+          guard let documentName: String = document!.name ?? filePath else {
+            print(HelpText.noInput)
+            return
+          }
+
           if Utilities.isDirectory(path: outPath) && format == "PDF" {
-            if let fileName = document?.name ?? filePath {
-              outPath = Utilities.createOutputPath(out: outputPath, file: fileName, format: format)
-            }
+            outPath = Utilities.createOutputPath(out: outputPath, file: documentName, format: format)
           }
 
           let absoluteOutputPath = NSURL(fileURLWithPath: outPath).absoluteURL
@@ -51,7 +49,7 @@ public final class DkstCLI {
             printAllSteps: printAllSteps,
             includePresenterNotes: includePresenterNotes
           )
-          if (filePath != nil) {
+          if filePath != nil {
             window?.close?()
           }
         }
