@@ -5,5 +5,5 @@ struct HelpText {
     static let printAllSteps: String = "Print all steps."
     static let includePresenterNotes: String = "Include presenter notes."
     static let exportDescription: String = "Export a Deckset presentation."
-    static let notInput: String = "No open presentation or input file specified."
+    static let noInput: String = "No open presentation or input file specified."
 }
