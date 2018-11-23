@@ -54,37 +54,41 @@ public final class DkstCLI {
           }
         }
 
-        $0.command("present", description: "Present a Deckset presentation.") {
+        $0.command("present", description: HelpText.presentDescription) {
           let document = Utilities.getCurrentDocument(decksetApp: self.app)
           document?.present?()
         }
 
-        $0.command("rehearse", description: "Rehearse a Deckset presentation.") {
+        $0.command("rehearse", description: HelpText.rehearseDescription) {
           let document = Utilities.getCurrentDocument(decksetApp: self.app)
           document?.rehearse?()
         }
 
         $0.command("open",
-          Argument<String>("path", description: "Path to a Deckset presentation."),
+          Argument<String>("path", description: HelpText.openPath),
           description: "Open a Deckset presentation."
         ) { (path: String) in
           let filePath = NSURL(fileURLWithPath: path).path
           self.app.open?(filePath)
         }
 
-        $0.command("preview", description: "Toggle the Deckset preview window.") {
+        $0.command("preview", description: HelpText.previewDescription) {
           let isPreview = self.app.preview
           self.app.setPreview?(!isPreview!)
         }
 
-        $0.command("quit", description: "Quit Deckset.") {
+        $0.command("quit", description: HelpText.quitDescription) {
           self.app.quit?()
         }
 
-        $0.command("slide-index", description: "Get or Set the current document's slide index") {
+        $0.command("slide-index", 
+          Option<String>("index", default: "", description: HelpText.index),
+          description: HelpText.slideIndexDescription) 
+        { (index: String) in
           let document = Utilities.getCurrentDocument(decksetApp: self.app)
-          let index = document?.slideIndex
-          print(String(index!))
+          let nextIndex = Int(index) ?? document?.slideIndex ?? 0
+          document?.setSlideIndex?(nextIndex)
+          print(String(nextIndex))
         }
       }
     }

@@ -5,5 +5,13 @@ struct HelpText {
     static let printAllSteps: String = "Print all steps."
     static let includePresenterNotes: String = "Include presenter notes."
     static let exportDescription: String = "Export a Deckset presentation."
+    static let presentDescription: String = "Present a Deckset presentation."
+    static let rehearseDescription: String = "Rehearse a Deckset presentation."
+    static let openDescription: String = "Open a Deckset presentation."
+    static let openPath: String = "Path to a Deckset presentation."
+    static let previewDescription: String = "Toggle the Deckset preview window."
+    static let quitDescription: String = "Quit Deckset."
     static let noInput: String = "No open presentation or input file specified."
+    static let slideIndexDescription = "Get or Set the current document's slide index."
+    static let index = "The slide index to set."
 }
