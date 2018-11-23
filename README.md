@@ -41,4 +41,6 @@ Commands:
       <path> - Path to a Deckset presentation.
     + preview - Toggle the Deckset preview window.
     + quit - Quit Deckset.
+    + slide-index - Get or Set the current document's slide index.
+      --index - The optional slide index to set.
 ```
