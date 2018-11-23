@@ -80,6 +80,12 @@ public final class DkstCLI {
         $0.command("quit", description: "Quit Deckset.") {
           self.app.quit?()
         }
+
+        $0.command("slide-index", description: "Get or Set the current document's slide index") {
+          let document = Utilities.getCurrentDocument(decksetApp: self.app)
+          let index = document?.slideIndex
+          print(String(index!))
+        }
       }
     }
 
